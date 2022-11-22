@@ -26,6 +26,7 @@ $('#peer-id').onchange = () => changePeerId(getMyPeerId());
 let clearPeerId;
 $('.clear-peer-id').onclick = () => clearPeerId();
 
+let outputCount = 0;
 
 const ui = {
 	updatePeerName(n) {
@@ -41,6 +42,21 @@ const ui = {
 	},
 	updateConnectionList(text) {
 		$('.connection-list').innerText = text;
+	},
+	updateOutput(text) {
+		$('#output').innerText = text;
+	},
+	appendOutput(logType, ...args) {
+		console[logType](...args);
+		const emojis = {
+			warn: '⚠️',
+			error: '❌',
+			info: 'ℹ️',
+			log: '',
+		};
+		outputCount += 1;
+		$('#output').innerHTML += `<li class="${logType} output-${outputCount}"></li>`;
+		$(`.output-${outputCount}`).innerText = `${emojis[logType] || ''} ${args.join(' ')}`;
 	},
 	onConnect(fn) { connectionFn = fn; },
 	onSend(fn) { sendFn = fn; },
