@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Simple WebRTC</title>
+	<style>
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			--dark1: #181b24; /* darkest */
+			--dark2: #0c5066; /* mid dark */
+			--light1: #f0e1d1; /* lightest */
+			--light2: #d99741; /* mid light */
+			color: var(--dark1);
+			background: var(--light1);
+		}
+		input {
+			width: 20em;
+			color: var(--dark1);
+			background: var(--light1);
+			padding: 0.25em 0.5em;
+		}
+		button {
+			display: inline-block;
+			margin: 0.25em;
+			color: var(--light1);
+			background: var(--dark2);
+			font-size: inherit;
+			padding: 0.5em 0.75em;
+			border: solid 1px var(--dark1);
+		}
+		.setup {
+			display: flex;
+			gap: 10vw;
+			justify-content: space-evenly;
+		}
+		.num {
+			display: inline-block;
+			padding: 0.25em 0.5em;
+			margin: 0.5em;
+			background: var(--light2);
+			color: var(--dark1);
+		}
+		.chat-section {
+			margin: 6vmin;
+			max-width: 80em;
+		}
+		.chat {
+			padding: 0.5em 1em;
+			border-radius: 0.5em;
+			margin: 0.5em;
+			background: var(--light2);
+			color: var(--dark1);
+			float: left;
+			clear: both;
+		}
+		.my-chat {
+			text-align: right;
+			background: var(--dark2);
+			color: var(--light1);
+			float: right;
+		}
+		#chat-log {
+			height: 30vmin;
+			overflow: auto;
+			border: 1px solid var(--dark1);
+			background: var(--dark2);
+			padding: 0.5em;
+			margin: 1em 0;
+		}
+	</style>
+</head>
+<body>
+	<h1>Connecting via WebRTC</h1>
+	<div class="setup">
+		<div>
+			<h1>Invite a Peer</h1>
+			<p>You're "Bob" - you're <b>offering</b> the connection</p>
+			<p>
+				<b class="num">1</b>
+				Bob invites Alice to a P2P connection by generating a string that describes his connection,
+				then sending that string to Alice (via email, text, chat, etc.) as an "offer".
+			</p>
+			<button id="createBtn">Create offer</button>
+			<input id="localOffer" readonly placeholder="Connection string will appear here">
+			<br>
+			<p><b class="num">4</b> Bob pastes Alice's answer to finalize the connection.</p>
+			<input id="remoteAnswer">
+			<button id="answerRecdBtn">Accept answer</button>
+		</div>
+		<div>
+			<h1>Join a Peer</h1>
+			<p>You're "Alice" - you're <b>answering</b> the offer</p>
+			<p><b class="num">2</b> Alice accepts Bob's invitation offer by pasting the invitation string.</p>
+			<input id="remoteOffer">
+			<button id="offerRecdBtn">Accept offer (Join)</button>
+			<p><b class="num">3</b> "Alice" then sends her own answer string (an RSVP to the invitation).</p>
+			<input id="localAnswer" readonly placeholder="Connection string will appear here">
+		</div>
+	</div>
+	<section class="chat-section">
+		<h1>Chat</h1>
+		<div id="chat-log"></div>
+		<input type="text" id="messageTextBox" placeholder="Type your message here">
+		<button id="sendMessageBtn">Send message</button>
+	</section>
+	<script src="example1.js" type="module"></script>
+</body>
+</html>
